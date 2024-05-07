@@ -1,1 +1,6 @@
-{}
+quarkus:
+  datasource:
+    db-kid: postgresql
+    devservices:
+      enabled: true
+      port: 5432
