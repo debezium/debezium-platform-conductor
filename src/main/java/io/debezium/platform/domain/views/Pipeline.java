@@ -2,6 +2,7 @@ package io.debezium.platform.domain.views;
 
 import com.blazebit.persistence.view.CreatableEntityView;
 import com.blazebit.persistence.view.EntityView;
+import com.blazebit.persistence.view.UpdatableEntityView;
 import io.debezium.platform.data.model.PipelineEntity;
 import io.debezium.platform.domain.views.base.NamedView;
 import io.debezium.platform.domain.views.refs.DestinationReference;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @EntityView(PipelineEntity.class)
 @CreatableEntityView
+@UpdatableEntityView
 public interface Pipeline extends NamedView {
     @NotNull
     SourceReference getSource();
