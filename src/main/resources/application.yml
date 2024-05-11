@@ -17,10 +17,9 @@ quarkus:
       name: type
   datasource:
     db-kind: postgresql
-    devservices:
-      enabled: true
-      port: 5432
-      image-name: quay.io/debezium/postgres:14-alpine
+  hibernate-orm:
+    database:
+      generation: drop-and-create
   log:
     level: INFO
 
@@ -34,6 +33,11 @@ quarkus:
   quarkus:
     debezium-outbox:
       remove-after-insert: false
+    datasource:
+      devservices:
+        enabled: true
+        port: 5432
+        image-name: quay.io/debezium/postgres:14-alpine
     log:
       level: INFO
       category:
