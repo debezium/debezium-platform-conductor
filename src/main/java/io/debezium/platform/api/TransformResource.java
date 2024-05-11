@@ -40,7 +40,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
                 contact = @Contact(name = "Debezium", url = "https://github.com/debezium/debezium")
         )
 )
-@Path("/api/transforms")
+@Path("/transforms")
 public class TransformResource {
 
     Logger logger;

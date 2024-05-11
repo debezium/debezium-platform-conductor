@@ -40,7 +40,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
                 contact = @Contact(name = "Debezium", url = "https://github.com/debezium/debezium")
         )
 )
-@Path("/api/destinations")
+@Path("/destinations")
 public class DestinationResource {
 
     Logger logger;
