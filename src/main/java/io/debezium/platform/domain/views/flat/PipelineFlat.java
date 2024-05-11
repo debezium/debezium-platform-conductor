@@ -1,6 +1,7 @@
 package io.debezium.platform.domain.views.flat;
 
 import com.blazebit.persistence.view.EntityView;
+import com.blazebit.persistence.view.UpdatableEntityView;
 import io.debezium.platform.data.model.PipelineEntity;
 import io.debezium.platform.domain.views.Destination;
 import io.debezium.platform.domain.views.Source;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @EntityView(PipelineEntity.class)
+@UpdatableEntityView
 public interface PipelineFlat extends NamedView {
     @NotNull
     Source getSource();
