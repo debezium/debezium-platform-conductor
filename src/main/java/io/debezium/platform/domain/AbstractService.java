@@ -68,7 +68,6 @@ public class AbstractService<E, T extends IdView> {
     }
 
     public void delete(long id) {
-        evm.remove(em, id);
+        evm.remove(em, viewType, id);
     }
-
 }
