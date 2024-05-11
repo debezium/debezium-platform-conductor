@@ -1,6 +1,26 @@
 quarkus:
+  debezium-outbox:
+    table-name: events
+    aggregate-type:
+      name: aggregatetype
+    aggregate-id:
+      name: aggregateid
+    type:
+      name: type
   datasource:
-    db-kid: postgresql
+    db-kind: postgresql
     devservices:
       enabled: true
       port: 5432
+      image-name: quay.io/debezium/postgres:14-alpine
+  log:
+    level: INFO
+
+"%dev":
+  quarkus:
+    debezium-outbox:
+      remove-after-insert: false
+    log:
+      level: INFO
+      category:
+        "io.debezium": DEBUG

@@ -53,6 +53,11 @@ public class AbstractService<E, T extends IdView> {
 
     @Transactional(SUPPORTS)
     public Optional<T> findById(Long id) {
+        return findByIdAs(viewType, id);
+    }
+
+    @Transactional(SUPPORTS)
+    public <V> Optional<V> findByIdAs(Class<V> viewType, Long id) {
         var result = evm.find(em, viewType, id);
         return Optional.ofNullable(result);
     }
