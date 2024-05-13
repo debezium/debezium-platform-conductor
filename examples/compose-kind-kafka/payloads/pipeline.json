@@ -1,0 +1,12 @@
+{
+  "name": "test-pipeline",
+  "source": {
+    "id": 1,
+    "name": "test-source"
+  },
+  "destination": {
+    "id": 1,
+    "name": "test-destination"
+  },
+  "logLevel": "debug"
+}
