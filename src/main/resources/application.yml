@@ -20,6 +20,8 @@ quarkus:
   hibernate-orm:
     database:
       generation: drop-and-create
+  swagger-ui:
+    always-include: true
   log:
     level: INFO
 
