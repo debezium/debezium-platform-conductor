@@ -3,6 +3,8 @@ package io.debezium.platform.data.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -10,9 +12,9 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Entity(name = "Transform")
 @Getter
@@ -28,7 +30,8 @@ public class TransformEntity {
     @NotEmpty
     private String schema;
     @ManyToMany
-    private List<VaultEntity> vaults = new LinkedList<>();
+    @JoinTable(joinColumns = @JoinColumn(name = "transform_id"), inverseJoinColumns = @JoinColumn(name = "vault_id"))
+    private Set<VaultEntity> vaults = new HashSet<>();
     @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, Object> config;
 }

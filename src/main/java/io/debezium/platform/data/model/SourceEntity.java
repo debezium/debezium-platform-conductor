@@ -12,9 +12,9 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Entity(name = "Source")
 @Getter
@@ -30,8 +30,8 @@ public class SourceEntity {
     @NotEmpty
     public String schema;
     @ManyToMany
-    @JoinTable(inverseJoinColumns = @JoinColumn(name = "vault_id"))
-    public List<VaultEntity> vaults = new LinkedList<>();
+    @JoinTable(joinColumns = @JoinColumn(name = "source_id"), inverseJoinColumns = @JoinColumn(name = "vault_id"))
+    public Set<VaultEntity> vaults = new HashSet<>();
     @JdbcTypeCode(SqlTypes.JSON)
     public Map<String, Object> config;
 }

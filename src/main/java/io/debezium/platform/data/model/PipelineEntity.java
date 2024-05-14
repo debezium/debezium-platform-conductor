@@ -7,6 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OrderColumn;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,8 +30,10 @@ public class PipelineEntity {
     @ManyToOne
     private DestinationEntity destination;
     @ManyToMany
-    @JoinTable(inverseJoinColumns = @JoinColumn(name = "transform_id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "pipeline_id"), inverseJoinColumns = @JoinColumn(name = "transform_id"))
+    @OrderColumn
     private List<TransformEntity> transforms = new LinkedList<>();
     @NotEmpty
     private String logLevel = "info";
 }
+

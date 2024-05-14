@@ -26,6 +26,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -83,14 +84,14 @@ public class ServiceTest {
         source1.setName("source1");
         source1.setSchema("schemaXY");
         source1.setType("io.debezium.connector.MongoDbConnector");
-        source1.setVaults(List.of(vaultRef(1)));
+        source1.setVaults(Set.of(vaultRef(1)));
         source1.setConfig(Map.of("mongodb.connection.string", "mongodb://localhost:27017"));
 
         var source2 = evm.create(Source.class);
         source2.setName("source2");
         source2.setSchema("schemaXY");
         source2.setType("io.debezium.connector.MongoDbConnector");
-        source2.setVaults(List.of(vaultRef(0)));
+        source2.setVaults(Set.of(vaultRef(0)));
         source2.setConfig(Map.of("mongodb.connection.string", "mongodb://localhost:37017"));
 
         sources.add(sourceService.create(source1));
@@ -106,14 +107,14 @@ public class ServiceTest {
         destination1.setName("destination2");
         destination1.setSchema("schemaDXY");
         destination1.setType("pubsub");
-        destination1.setVaults(List.of(vaultRef(0),vaultRef(1)));
+        destination1.setVaults(Set.of(vaultRef(0),vaultRef(1)));
         destination1.setConfig(Map.of("foo", "bar"));
 
         var destination2 = evm.create(Destination.class);
         destination2.setName("destination2");
         destination2.setSchema("schemaDYZ");
         destination2.setType("redis");
-        destination2.setVaults(List.of(vaultRef(0)));
+        destination2.setVaults(Set.of(vaultRef(0)));
         destination2.setConfig(Map.of("bar", "baz"));
 
         destinations.add(destinationService.create(destination1));
@@ -129,7 +130,7 @@ public class ServiceTest {
         transform1.setName("transform1");
         transform1.setSchema("schemaASD");
         transform1.setType("io.example.SomeTransform");
-        transform1.setVaults(List.of(vaultRef(0),vaultRef(1)));
+        transform1.setVaults(Set.of(vaultRef(0),vaultRef(1)));
         transform1.setConfig(Map.of("baz", "qux"));
 
         transforms.add(transformService.create(transform1));
