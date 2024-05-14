@@ -31,7 +31,7 @@ public class OperatorPipelineController implements PipelineController {
     public void deploy(PipelineFlat pipeline) {
         // Create DS quarkus configuration
         var quarkusConfig = new ConfigProperties();
-        quarkusConfig.setProps("log.leve", pipeline.getLogLevel());
+        quarkusConfig.setProps("log.level", pipeline.getLogLevel());
         var dsQuarkus = new QuarkusBuilder()
                 .withConfig(quarkusConfig)
                 .build();
