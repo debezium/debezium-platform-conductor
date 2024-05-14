@@ -56,10 +56,10 @@ public class ServiceTest {
     public void createVault() {
         var vault1 = evm.create(Vault.class);
         vault1.setName("vault1");
-        vault1.setKeys(List.of("foo", "bar"));
+        vault1.setItems(Map.of("foo", "bar", "baz", "qux"));
         var vault2 = evm.create(Vault.class);
         vault2.setName("vault2");
-        vault2.setKeys(List.of("baz", "qux"));
+        vault2.setItems(Map.of("baz", "qux"));
 
         vaults.add(vaultService.create(vault1));
         vaults.add(vaultService.create(vault2));
@@ -69,7 +69,7 @@ public class ServiceTest {
     @Order(10)
     public void updateVault() {
         var v = vaults.get(0);
-        v.setKeys(List.of("bar"));
+        v.setItems(Map.of("foo", "bar"));
         v = vaultService.update(v);
         vaults.set(0, v);
     }

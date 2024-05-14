@@ -9,8 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity(name = "Vault")
 @Getter
@@ -23,5 +23,5 @@ public class VaultEntity {
     private String name;
     private boolean plaintext = false;
     @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> keys = new LinkedList<>();
+    private Map<String, String> items = new HashMap<>();
 }

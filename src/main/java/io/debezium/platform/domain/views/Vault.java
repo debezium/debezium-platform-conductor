@@ -7,7 +7,7 @@ import com.blazebit.persistence.view.UpdatableEntityView;
 import io.debezium.platform.data.model.VaultEntity;
 import io.debezium.platform.domain.views.refs.VaultReference;
 
-import java.util.List;
+import java.util.Map;
 
 @EntityView(VaultEntity.class)
 @CreatableEntityView
@@ -15,9 +15,9 @@ import java.util.List;
 public interface Vault extends VaultReference {
     boolean isPlaintext();
     @MappingSingular
-    List<String> getKeys();
+    Map<String, String> getItems();
 
     void setName(String name);
     void setPlaintext(boolean plaintext);
-    void setKeys(List<String> keys);
+    void setItems(Map<String, String> items);
 }
