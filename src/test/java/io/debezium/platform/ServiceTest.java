@@ -181,23 +181,31 @@ public class ServiceTest {
     }
 
     @Test
+    @Order(61)
+    public void deletePipeline() {
+       pipelineService.delete(pipeline.getId());
+
+       var found = pipelineService.findById(pipeline.getId());
+       Assertions.assertThat(found).isEmpty();
+       Assertions.assertThat(destinationService.list()).hasSize(2);
+       Assertions.assertThat(sourceService.list()).hasSize(2);
+    }
+
+    @Test
     @Order(100)
     public void foo() {
         System.out.println();
     }
 
     public VaultReference vaultRef(int idx) {
-        var vault = vaults.get(idx);
-        return vaultService.findReferenceById(vault.getId()).orElseThrow();
+        return vaultService.viewAs(vaults.get(idx), VaultReference.class);
     }
 
     public SourceReference sourceRef(int idx) {
-        var source = sources.get(idx);
-        return sourceService.findReferenceById(source.getId()).orElseThrow();
+        return sourceService.viewAs(sources.get(idx), SourceReference.class);
     }
 
     public DestinationReference destinationRef(int idx) {
-        var destination = destinations.get(idx);
-        return destinationService.findReferenceById(destination.getId()).orElseThrow();
+        return destinationService.viewAs(destinations.get(idx), DestinationReference.class);
     }
 }

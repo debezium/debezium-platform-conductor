@@ -20,10 +20,10 @@ import static jakarta.transaction.Transactional.TxType.REQUIRED;
 import static jakarta.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
-public class SourceService extends AbstractService<SourceEntity, Source> {
+public class SourceService extends AbstractService<SourceEntity, Source, SourceReference> {
 
     public SourceService(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
-        super(SourceEntity.class, Source.class, em, cbf, evm);
+        super(SourceEntity.class, Source.class, SourceReference.class, em, cbf, evm);
     }
 
     @Transactional(SUPPORTS)

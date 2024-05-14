@@ -17,10 +17,10 @@ import static jakarta.transaction.Transactional.TxType.REQUIRED;
 import static jakarta.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
-public class TransformService extends AbstractService<TransformEntity, Transform> {
+public class TransformService extends AbstractService<TransformEntity, Transform, TransformReference> {
 
     public TransformService(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
-        super(TransformEntity.class, Transform.class, em, cbf, evm);
+        super(TransformEntity.class, Transform.class, TransformReference.class, em, cbf, evm);
     }
 
     @Transactional(SUPPORTS)

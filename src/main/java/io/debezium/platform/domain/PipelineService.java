@@ -8,17 +8,15 @@ import io.debezium.outbox.quarkus.ExportedEvent;
 import io.debezium.platform.data.model.PipelineEntity;
 import io.debezium.platform.domain.views.Pipeline;
 import io.debezium.platform.domain.views.flat.PipelineFlat;
+import io.debezium.platform.domain.views.refs.PipelineReference;
 import io.debezium.platform.environment.watcher.events.PipelineEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
-
-import java.util.Optional;
 
 @ApplicationScoped
-public class PipelineService extends AbstractService<PipelineEntity, Pipeline> {
+public class PipelineService extends AbstractService<PipelineEntity, Pipeline, PipelineReference> {
 
     @Inject
     Event<ExportedEvent<?, ?>> event;
@@ -27,42 +25,18 @@ public class PipelineService extends AbstractService<PipelineEntity, Pipeline> {
     ObjectMapper objectMapper;
 
     public PipelineService(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
-        super(PipelineEntity.class, Pipeline.class, em, cbf, evm);
+        super(PipelineEntity.class, Pipeline.class, PipelineReference.class, em, cbf, evm);
     }
 
-    @Transactional(Transactional.TxType.SUPPORTS)
-    public Optional<PipelineFlat> findByIdFlat(Long id) {
-        var result = evm.find(em, PipelineFlat.class, id);
-        return Optional.ofNullable(result);
+
+    @Override
+    protected void onChange(Pipeline view) {
+        var flat =findByIdAs(PipelineFlat.class, view.getId()).orElseThrow();
+        event.fire(PipelineEvent.update(flat, objectMapper));
     }
 
     @Override
-    public Pipeline create(Pipeline view) {
-        var result = super.create(view);
-        fireUpdateEvent(result.getId());
-        return result;
-    }
-
-    @Override
-    public Pipeline update(Pipeline view) {
-        var result = super.update(view);
-        fireUpdateEvent(result.getId());
-        return result;
-    }
-
-    @Override
-    public void delete(long id) {
-        super.delete(id);
-        fireDeleteEvent(id);
-    }
-
-    private void fireUpdateEvent(Long id) {
-        var flat = findByIdFlat(id);
-        flat.ifPresent(pipeline -> event.fire(PipelineEvent.update(pipeline, objectMapper)));
-    }
-
-    private void fireDeleteEvent(Long id) {
+    protected void onChange(Long id) {
         event.fire(PipelineEvent.delete(id));
     }
-
 }

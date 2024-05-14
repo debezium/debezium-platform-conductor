@@ -15,10 +15,10 @@ import java.util.Optional;
 import static jakarta.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
-public class DestinationService extends AbstractService<DestinationEntity, Destination> {
+public class DestinationService extends AbstractService<DestinationEntity, Destination, DestinationReference> {
 
     public DestinationService(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
-        super(DestinationEntity.class, Destination.class, em, cbf, evm);
+        super(DestinationEntity.class, Destination.class, DestinationReference.class, em, cbf, evm);
     }
 
     @Transactional(SUPPORTS)
