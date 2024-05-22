@@ -31,7 +31,10 @@ public class OperatorPipelineController implements PipelineController {
     public void deploy(PipelineFlat pipeline) {
         // Create DS quarkus configuration
         var quarkusConfig = new ConfigProperties();
-        quarkusConfig.setProps("log.level", pipeline.getLogLevel());
+        quarkusConfig.setAllProps(Map.of(
+                "log.level", pipeline.getLogLevel(),
+                "log.console.json", false
+        ));
         var dsQuarkus = new QuarkusBuilder()
                 .withConfig(quarkusConfig)
                 .build();
@@ -40,6 +43,8 @@ public class OperatorPipelineController implements PipelineController {
         var source = pipeline.getSource();
         var sourceConfig = new ConfigProperties();
         sourceConfig.setAllProps(source.getConfig());
+        sourceConfig.setProps("offset.storage", "org.apache.kafka.connect.storage.MemoryOffsetBackingStore");
+        sourceConfig.setProps("database.history", "io.debezium.relational.history.MemorySchemaHistory");
 
         var dsSource = new SourceBuilder()
                 .withSourceClass(source.getType())
