@@ -24,6 +24,7 @@ public interface PipelineFlat extends NamedView {
     @NotEmpty
     String getLogLevel();
 
+    void setDescription(String description);
     void setName(String name);
     void setSource(Source source);
     void setDestination(Destination destination);
