@@ -1,5 +1,6 @@
 package io.debezium.platform.data.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,10 +25,14 @@ public class TransformEntity {
     @GeneratedValue
     private Long id;
     @NotEmpty
+    @Column(unique = true, nullable = false)
     private String name;
+    private String description;
     @NotEmpty
+    @Column(nullable = false)
     private String type;
     @NotEmpty
+    @Column(nullable = false)
     private String schema;
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "transform_id"), inverseJoinColumns = @JoinColumn(name = "vault_id"))

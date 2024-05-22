@@ -15,6 +15,7 @@ import java.util.List;
 @EntityView(PipelineEntity.class)
 @UpdatableEntityView
 public interface PipelineFlat extends NamedView {
+    String getDescription();
     @NotNull
     Source getSource();
     @NotNull

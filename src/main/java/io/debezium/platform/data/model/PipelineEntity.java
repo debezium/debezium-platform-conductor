@@ -1,5 +1,6 @@
 package io.debezium.platform.data.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,7 +25,9 @@ public class PipelineEntity {
     @GeneratedValue
     private Long id;
     @NotEmpty
+    @Column(unique = true, nullable = false)
     private String name;
+    private String description;
     @ManyToOne
     private SourceEntity source;
     @ManyToOne

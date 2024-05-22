@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public interface PipelineComponent extends NamedView {
+    String getDescription();
     @NotEmpty
     String getType();
     @NotEmpty
@@ -17,6 +18,7 @@ public interface PipelineComponent extends NamedView {
     @MappingSingular
     Map<String, Object> getConfig();
 
+    void setDescription(String description);
     void setType(String type);
     void setName(String name);
     void setSchema(String schema);

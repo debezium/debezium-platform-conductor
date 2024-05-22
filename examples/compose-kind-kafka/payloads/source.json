@@ -1,5 +1,6 @@
 {
   "name": "test-source",
+  "description": "Yummy data source",
   "type": "io.debezium.connector.postgresql.PostgresConnector",
   "schema": "dummy",
   "vaults": [],

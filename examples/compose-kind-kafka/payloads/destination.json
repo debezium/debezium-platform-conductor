@@ -1,6 +1,7 @@
 {
   "name": "test-destination",
   "type": "kafka",
+  "description": "Some funny destination",
   "schema": "dummy",
   "vaults": [],
   "config": {
