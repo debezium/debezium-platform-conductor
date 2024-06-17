@@ -6,7 +6,14 @@ import io.debezium.operator.api.model.DebeziumServerBuilder;
 import io.debezium.operator.api.model.DebeziumServerSpecBuilder;
 import io.debezium.operator.api.model.QuarkusBuilder;
 import io.debezium.operator.api.model.SinkBuilder;
-import io.debezium.operator.api.model.SourceBuilder;
+import io.debezium.operator.api.model.runtime.RuntimeBuilder;
+import io.debezium.operator.api.model.runtime.metrics.JmxExporterBuilder;
+import io.debezium.operator.api.model.runtime.metrics.MetricsBuilder;
+import io.debezium.operator.api.model.source.OffsetBuilder;
+import io.debezium.operator.api.model.source.SchemaHistoryBuilder;
+import io.debezium.operator.api.model.source.SourceBuilder;
+import io.debezium.operator.api.model.source.storage.offset.InMemoryOffsetStore;
+import io.debezium.operator.api.model.source.storage.schema.InMemorySchemaHistoryStore;
 import io.debezium.platform.domain.views.flat.PipelineFlat;
 import io.debezium.platform.environment.PipelineController;
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
@@ -39,15 +46,31 @@ public class OperatorPipelineController implements PipelineController {
                 .withConfig(quarkusConfig)
                 .build();
 
+        var dsRuntime = new RuntimeBuilder()
+                .withMetrics(new MetricsBuilder()
+                        .withJmxExporter(new JmxExporterBuilder()
+                                .withEnabled()
+                                .build())
+                        .build())
+                .build();
+
         // Create DS source configuration
         var source = pipeline.getSource();
         var sourceConfig = new ConfigProperties();
         sourceConfig.setAllProps(source.getConfig());
-        sourceConfig.setProps("offset.storage", "org.apache.kafka.connect.storage.MemoryOffsetBackingStore");
-        sourceConfig.setProps("database.history", "io.debezium.relational.history.MemorySchemaHistory");
+
+        // TODO: offset and schema history type should be configurable in the future
+        var offset = new OffsetBuilder()
+                .withMemory(new InMemoryOffsetStore())
+                .build();
+        var schemaHistory = new SchemaHistoryBuilder()
+                .withMemory(new InMemorySchemaHistoryStore())
+                .build();
 
         var dsSource = new SourceBuilder()
                 .withSourceClass(source.getType())
+                .withOffset(offset)
+                .withSchemaHistory(schemaHistory)
                 .withConfig(sourceConfig)
                 .build();
 
@@ -69,6 +92,7 @@ public class OperatorPipelineController implements PipelineController {
                         .build())
                 .withSpec(new DebeziumServerSpecBuilder()
                         .withQuarkus(dsQuarkus)
+                        .withRuntime(dsRuntime)
                         .withSource(dsSource)
                         .withSink(dsSink)
                         .build())

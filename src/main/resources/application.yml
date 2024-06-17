@@ -39,7 +39,7 @@ quarkus:
       devservices:
         enabled: true
         port: 5432
-        image-name: quay.io/debezium/postgres:14-alpine
+        image-name: quay.io/debezium/postgres:16-alpine
     log:
       level: INFO
       category:

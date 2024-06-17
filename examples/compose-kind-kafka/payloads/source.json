@@ -5,8 +5,6 @@
   "schema": "dummy",
   "vaults": [],
   "config": {
-    "offset.storage": "org.apache.kafka.connect.storage.MemoryOffsetBackingStore",
-    "database.history": "io.debezium.relational.history.MemorySchemaHistory",
     "database.hostname": "postgresql",
     "database.port": 5432,
     "database.user": "debezium",
