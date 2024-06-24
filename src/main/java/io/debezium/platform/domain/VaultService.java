@@ -13,8 +13,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-
-import static jakarta.transaction.Transactional.TxType.SUPPORTS;
+import jakarta.transaction.Transactional;
 
 
 @ApplicationScoped
@@ -31,12 +30,14 @@ public class VaultService extends AbstractService<VaultEntity, Vault, VaultRefer
     }
 
     @Override
-    protected void onChange(Vault view) {
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void onChange(Vault view) {
         event.fire(VaultEvent.update(view, objectMapper));
     }
 
     @Override
-    protected void onChange(Long id) {
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void onChange(Long id) {
         event.fire(VaultEvent.delete(id));
     }
 }

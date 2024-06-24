@@ -10,6 +10,7 @@ services:
       QUARKUS_DATASOURCE_JDBC_URL:  jdbc:postgresql://postgres:5432/conductor
       CONDUCTOR_WATCHER_ENABLED: true
       QUARKUS_KUBERNETES_CLIENT_NAMESPACE: debezium
+      QUARKUS_HTTP_CORS_ORIGINS: http://localhost:3000
     volumes:
       - type: bind
         source: ./kubeconfig
@@ -25,6 +26,14 @@ services:
       POSTGRES_USER: conductor
       POSTGRES_PASSWORD: conductor
       POSTGRES_DB: conductor
+    networks:
+      - conductor
+  stage:
+    container_name: stage
+    image: quay.io/debezium/platform-stage:latest
+    pull_policy: always
+    ports:
+      - "3000:3000"
     networks:
       - conductor
 volumes:

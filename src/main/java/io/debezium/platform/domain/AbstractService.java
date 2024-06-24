@@ -94,11 +94,13 @@ public class AbstractService<E, T extends IdView, R extends IdView> {
         onChange(id);
     }
 
-    protected void onChange(T view) {
+    @Transactional(REQUIRED)
+    public void onChange(T view) {
         // default no-op
     }
 
-    protected void onChange(Long id) {
+    @Transactional(REQUIRED)
+    public void onChange(Long id) {
         // default no-op
     }
 }

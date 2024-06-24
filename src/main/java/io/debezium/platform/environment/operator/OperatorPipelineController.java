@@ -16,11 +16,16 @@ import io.debezium.operator.api.model.source.storage.offset.InMemoryOffsetStore;
 import io.debezium.operator.api.model.source.storage.schema.InMemorySchemaHistoryStore;
 import io.debezium.platform.domain.views.flat.PipelineFlat;
 import io.debezium.platform.environment.PipelineController;
+import io.debezium.platform.environment.operator.logs.KubernetesLogReader;
+import io.debezium.platform.environment.logs.LogReader;
+import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.Loggable;
 import jakarta.enterprise.context.Dependent;
 
 import java.util.Map;
+import java.util.Optional;
 
 
 @Dependent
@@ -107,5 +112,45 @@ public class OperatorPipelineController implements PipelineController {
         k8s.resources(DebeziumServer.class)
                 .withLabels(Map.of(LABEL_DBZ_CONDUCTOR_ID, id.toString()))
                 .delete();
+    }
+
+    @Override
+    public void stop(Long id) {
+        stop(id, true);
+    }
+
+    @Override
+    public void start(Long id) {
+        stop(id, false);
+    }
+
+    public Optional<DebeziumServer> findById(Long id) {
+        return k8s.resources(DebeziumServer.class)
+                .withLabels(Map.of(LABEL_DBZ_CONDUCTOR_ID, id.toString()))
+                .list()
+                .getItems()
+                .stream()
+                .findFirst();
+    }
+
+    private Loggable findDeploymentLoggable(Long id, int tailingLines) {
+        return findById(id)
+                .map(DebeziumServer::getMetadata)
+                .map(ObjectMeta::getName)
+                .map(name -> k8s.apps().deployments().withName(name))
+                .map(d -> d.tailingLines(tailingLines))
+                .get();
+    }
+
+    @Override
+    public LogReader logReader(Long id) {
+        return new KubernetesLogReader(() -> findDeploymentLoggable(id, 100));
+    }
+
+    private void stop(Long id, boolean stop) {
+        findById(id).ifPresent(ds -> {
+            ds.setStopped(stop);
+            k8s.resource(ds).serverSideApply();
+        });
     }
 }

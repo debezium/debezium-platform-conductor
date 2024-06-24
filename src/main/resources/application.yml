@@ -7,6 +7,9 @@ conductor:
       file: offsets.dat
 
 quarkus:
+  http:
+    cors:
+        ~: true
   debezium-outbox:
     table-name: events
     aggregate-type:
@@ -40,6 +43,8 @@ quarkus:
         enabled: true
         port: 5432
         image-name: quay.io/debezium/postgres:16-alpine
+    http:
+      port: 8081
     log:
       level: INFO
       category:
