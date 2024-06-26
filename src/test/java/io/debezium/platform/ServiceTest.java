@@ -104,7 +104,7 @@ public class ServiceTest {
         Assumptions.assumeThat(vaults).hasSize(2);
 
         var destination1 = evm.create(Destination.class);
-        destination1.setName("destination2");
+        destination1.setName("destination1");
         destination1.setSchema("schemaDXY");
         destination1.setType("pubsub");
         destination1.setVaults(Set.of(vaultRef(0),vaultRef(1)));
