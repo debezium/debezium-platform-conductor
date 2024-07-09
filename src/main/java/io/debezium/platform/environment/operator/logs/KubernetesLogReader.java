@@ -3,7 +3,7 @@ package io.debezium.platform.environment.operator.logs;
 import io.debezium.platform.environment.logs.LogReader;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.dsl.LogWatch;
-import io.fabric8.kubernetes.client.dsl.Loggable;
+import io.fabric8.kubernetes.client.dsl.TailPrettyLoggable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,12 +13,18 @@ import java.util.function.Supplier;
 
 public class KubernetesLogReader implements LogReader {
 
-    private final Supplier<Loggable> supplier;
+    public static final int STREAM_TAIL_LINES = 100;
+
+    private final Supplier<TailPrettyLoggable> supplier;
     private LogWatch watch;
     private BufferedReader reader;
 
-    public KubernetesLogReader(Supplier<Loggable> supplier) {
+    public KubernetesLogReader(Supplier<TailPrettyLoggable> supplier) {
         this.supplier = Objects.requireNonNull(supplier, "Supplier cannot be null");
+    }
+
+    public String readAll() {
+        return supplier.get().getLog();
     }
 
     @Override
@@ -44,7 +50,7 @@ public class KubernetesLogReader implements LogReader {
     private BufferedReader ensureReader() throws IOException {
         if (reader == null) {
             try {
-                this.watch = supplier.get().watchLog();
+                this.watch = supplier.get().tailingLines(STREAM_TAIL_LINES).watchLog();
                 this.reader = new BufferedReader(new InputStreamReader(watch.getOutput()));
             } catch (KubernetesClientException e) {
                 throw new IOException(e);

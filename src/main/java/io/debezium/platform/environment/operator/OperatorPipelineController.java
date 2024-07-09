@@ -21,7 +21,7 @@ import io.debezium.platform.environment.logs.LogReader;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import io.fabric8.kubernetes.client.dsl.Loggable;
+import io.fabric8.kubernetes.client.dsl.TailPrettyLoggable;
 import jakarta.enterprise.context.Dependent;
 
 import java.util.Map;
@@ -133,18 +133,17 @@ public class OperatorPipelineController implements PipelineController {
                 .findFirst();
     }
 
-    private Loggable findDeploymentLoggable(Long id, int tailingLines) {
+    private TailPrettyLoggable findDeploymentLoggable(Long id) {
         return findById(id)
                 .map(DebeziumServer::getMetadata)
                 .map(ObjectMeta::getName)
                 .map(name -> k8s.apps().deployments().withName(name))
-                .map(d -> d.tailingLines(tailingLines))
                 .get();
     }
 
     @Override
     public LogReader logReader(Long id) {
-        return new KubernetesLogReader(() -> findDeploymentLoggable(id, 100));
+        return new KubernetesLogReader(() -> findDeploymentLoggable(id));
     }
 
     private void stop(Long id, boolean stop) {

@@ -6,7 +6,20 @@ import java.io.IOException;
 
 public interface LogReader extends Closeable {
 
+
     /**
+     * Reads the entire log content currently available.
+     *
+     * @return the log content
+     */
+    String readAll();
+
+    /**
+     * Obtains a {@link BufferedReader} that can be used to read live logs
+     * <p>
+     * Note that if this method is called, the reader must be closed by calling {@link #close()}.
+     * </p
+     *
      * @return a {@link BufferedReader} that can be used to read the log
      * @throws IOException if an I/O error occurs
      */
