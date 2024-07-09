@@ -127,7 +127,9 @@ public class PipelineResource {
                 .map(EnvironmentController::pipelines)
                 .map(pipelines -> pipelines.logReader(id))
                 .map(LogReader::readAll)
-                .map(log -> Response.ok(log).build())
+                .map(log -> Response.ok(log)
+                        .header("Content-Disposition", "attachment; filename=pipeline.log")
+                        .build())
                 .orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
     }
 }
