@@ -17,6 +17,7 @@ if $DBZ_INSTALL_OPERATOR; then
   echo ">>> Installing Debezium operator"
   echo ">> Add helm repo"
   helm repo add debezium https://charts.debezium.io
+  helm repo update debezium
   echo ">> Deploy operator"
   helm install debezium-operator debezium/debezium-operator --version $DBZ_OPERATOR_VERSION --namespace $NAMESPACE
 fi
@@ -25,6 +26,7 @@ if $STRIMZI_INSTALL_OPERATOR; then
   echo ">>> Installing Strimzi operator"
   echo ">> Add helm repo"
   helm repo add strimzi https://strimzi.io/charts/
+  helm repo update strimzi
   echo ">> Deploy operator"
   helm install strimzi-operator strimzi/strimzi-kafka-operator --version $STRIMZI_OPERATOR_VERSION --namespace $NAMESPACE
 fi
