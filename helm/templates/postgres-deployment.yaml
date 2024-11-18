@@ -1,0 +1,37 @@
+{{- if .Values.database.managed.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: debezium-platform
+    app.kubernetes.io/managed-by: Helm
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+  template:
+    metadata:
+      annotations:
+      labels:
+        app.kubernetes.io/name: postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: {{ .Values.database.name }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.database.password }}
+            - name: POSTGRES_USER
+              value: {{ .Values.database.username }}
+          image: {{ .Values.database.managed.image }}
+          name: postgres
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+      restartPolicy: Always
+{{- end }}

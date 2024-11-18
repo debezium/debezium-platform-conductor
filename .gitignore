@@ -44,3 +44,4 @@ nb-configuration.xml
 
 # Generated Intenral Kind kubeconfig
 examples/compose-kind-kafka/kubeconfig
+/helm/charts/*.tgz

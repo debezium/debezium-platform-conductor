@@ -1,0 +1,66 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "api": {
+            "properties": {
+                "image": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "database": {
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "managed": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "image": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "domain": {
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "kafka": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "stage": {
+            "properties": {
+                "image": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

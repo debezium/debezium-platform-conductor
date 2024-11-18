@@ -1,0 +1,18 @@
+domain:
+  url: platform.debezium.io
+stage:
+  image: quay.io/debezium/platform-stage:latest
+api:
+  image: quay.io/debezium/platform-conductor:nightly
+kafka:
+  enabled: true
+database:
+  managed:
+    enabled: true
+    image: quay.io/debezium/postgres:14-alpine
+  name: conductor
+  host: postgres
+  username: conductor
+  password: conductor
+
+
