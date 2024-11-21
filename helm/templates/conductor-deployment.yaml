@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: conductor
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: debezium-platform
-    app.kubernetes.io/managed-by: Helm
+{{ include "common.labels" . | indent 4 }}
   name: conductor
 spec:
   replicas: 1
@@ -29,9 +29,15 @@ spec:
             - name: QUARKUS_DATASOURCE_JDBC_URL
               value: jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.name }}
             - name: QUARKUS_DATASOURCE_PASSWORD
-              value: {{ .Values.database.password }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "debezium-platform.secretName" . }}
+                  key: password
             - name: QUARKUS_DATASOURCE_USERNAME
-              value: {{ .Values.database.username }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "debezium-platform.secretName" . }}
+                  key: username
             - name: QUARKUS_HTTP_CORS_ORIGINS
               value: http://{{ .Values.domain.url }}
             - name: QUARKUS_KUBERNETES_CLIENT_NAMESPACE

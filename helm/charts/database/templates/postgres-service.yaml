@@ -1,4 +1,4 @@
-{{- if .Values.database.managed.enabled -}}
+{{- if .Values.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: postgres
     app.kubernetes.io/component: database
     app.kubernetes.io/part-of: debezium-platform
-    app.kubernetes.io/managed-by: Helm
+{{ include "common.labels" . | indent 4 }}
   name: postgres
 spec:
   ports:
@@ -16,4 +16,4 @@ spec:
       targetPort: 5432
   selector:
     app.kubernetes.io/name: postgres
-{{- end }}
+{{- end}}

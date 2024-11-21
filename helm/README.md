@@ -24,7 +24,7 @@ sudo echo $(minikube ip) platform.debezium.io >> /etc/hosts
 ```shell
 helm dependency build
 ```
-Thi will install the required debezium operator chart and, only if `kafka.enabled` is `true`, the strimzi operator chart.
+Thi will download the required debezium operator chart and, only if `kafka.enabled` is `true`, the strimzi operator chart.
 
 ```shell
 helm install <release_name> .

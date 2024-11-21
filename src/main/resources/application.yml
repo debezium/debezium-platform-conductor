@@ -22,7 +22,8 @@ quarkus:
     db-kind: postgresql
   hibernate-orm:
     database:
-      generation: drop-and-create
+      #   We should use Flyway or Liquibase for schema migration
+      generation: update
   swagger-ui:
     always-include: true
   log:

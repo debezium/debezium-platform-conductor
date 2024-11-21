@@ -11,27 +11,21 @@
         },
         "database": {
             "properties": {
-                "host": {
-                    "type": "string"
-                },
-                "managed": {
+                "auth": {
                     "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        },
-                        "image": {
+                        "existingSecret": {
                             "type": "string"
                         }
                     },
                     "type": "object"
                 },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "host": {
+                    "type": "string"
+                },
                 "name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "username": {
                     "type": "string"
                 }
             },

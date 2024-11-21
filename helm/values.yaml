@@ -5,14 +5,10 @@ stage:
 api:
   image: quay.io/debezium/platform-conductor:nightly
 kafka:
-  enabled: true
+  enabled: false
 database:
-  managed:
-    enabled: true
-    image: quay.io/debezium/postgres:14-alpine
-  name: conductor
+  enabled: false
+  name: postgres
   host: postgres
-  username: conductor
-  password: conductor
-
-
+  auth:
+    existingSecret: ""

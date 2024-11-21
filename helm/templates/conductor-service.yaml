@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: conductor
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: debezium-platform
-    app.kubernetes.io/managed-by: Helm
+{{ include "common.labels" . | indent 4 }}
   name: conductor
 spec:
   ports:

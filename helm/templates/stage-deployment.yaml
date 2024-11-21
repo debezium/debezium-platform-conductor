@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: stage
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: debezium-platform
-    app.kubernetes.io/managed-by: Helm
+{{ include "common.labels" . | indent 4 }}
   name: stage
 spec:
   replicas: 1
