@@ -39,6 +39,23 @@
             },
             "type": "object"
         },
+        "env": {
+            "properties": {
+                "CONDUCTOR_WATCHER_ENABLED": {
+                    "type": "string"
+                },
+                "QUARKUS_DATASOURCE_JDBC_URL": {
+                    "type": "string"
+                },
+                "QUARKUS_HTTP_CORS_ORIGINS": {
+                    "type": "string"
+                },
+                "QUARKUS_KUBERNETES_CLIENT_NAMESPACE": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "kafka": {
             "properties": {
                 "enabled": {

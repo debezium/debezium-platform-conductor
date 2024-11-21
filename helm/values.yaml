@@ -12,3 +12,8 @@ database:
   host: postgres
   auth:
     existingSecret: ""
+env:
+  QUARKUS_KUBERNETES_CLIENT_NAMESPACE: "{{ .Release.Namespace }}"
+  QUARKUS_HTTP_CORS_ORIGINS: "http://{{ .Values.domain.url }}"
+  CONDUCTOR_WATCHER_ENABLED: "true"
+  QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.name }}"
