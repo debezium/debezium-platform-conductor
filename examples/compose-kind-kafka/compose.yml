@@ -38,6 +38,8 @@ services:
       - conductor
     ports:
       - "3000:3000"
+    environment:
+      CONDUCTOR_URL: http://localhost:8080
     networks:
       - conductor
 volumes:
