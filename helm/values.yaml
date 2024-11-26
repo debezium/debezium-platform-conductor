@@ -2,7 +2,7 @@ domain:
   url: platform.debezium.io
 stage:
   image: quay.io/debezium/platform-stage:latest
-api:
+conductor:
   image: quay.io/debezium/platform-conductor:nightly
 kafka:
   enabled: false
@@ -15,5 +15,4 @@ database:
 env:
   QUARKUS_KUBERNETES_CLIENT_NAMESPACE: "{{ .Release.Namespace }}"
   QUARKUS_HTTP_CORS_ORIGINS: "http://{{ .Values.domain.url }}"
-  CONDUCTOR_WATCHER_ENABLED: "true"
   QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.name }}"

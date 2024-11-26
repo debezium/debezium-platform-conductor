@@ -38,7 +38,7 @@ spec:
             - name: {{ $key }}
               value: {{ tpl $value $ | quote}}
             {{- end }}
-          image: {{ .Values.api.image }}
+          image: {{ .Values.conductor.image }}
           name: conductor
           ports:
             - containerPort: 8080
