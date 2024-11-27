@@ -1,0 +1,77 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "api": {
+            "properties": {
+                "image": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "database": {
+            "properties": {
+                "auth": {
+                    "properties": {
+                        "existingSecret": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "domain": {
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "env": {
+            "properties": {
+                "CONDUCTOR_WATCHER_ENABLED": {
+                    "type": "string"
+                },
+                "QUARKUS_DATASOURCE_JDBC_URL": {
+                    "type": "string"
+                },
+                "QUARKUS_HTTP_CORS_ORIGINS": {
+                    "type": "string"
+                },
+                "QUARKUS_KUBERNETES_CLIENT_NAMESPACE": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "kafka": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "stage": {
+            "properties": {
+                "image": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
