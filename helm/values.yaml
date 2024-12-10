@@ -1,9 +1,11 @@
 domain:
-  url: platform.debezium.io
+  url: ""
 stage:
   image: quay.io/debezium/platform-stage:latest
 conductor:
   image: quay.io/debezium/platform-conductor:nightly
+  offset:
+    existingConfigMap: ""
 kafka:
   enabled: false
 database:
@@ -14,5 +16,3 @@ database:
     existingSecret: ""
 env:
   QUARKUS_KUBERNETES_CLIENT_NAMESPACE: "{{ .Release.Namespace }}"
-  QUARKUS_HTTP_CORS_ORIGINS: "http://{{ .Values.domain.url }}"
-  QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.name }}"

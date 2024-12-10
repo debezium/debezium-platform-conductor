@@ -26,6 +26,6 @@ spec:
             - containerPort: 3000
               protocol: TCP
           env:
-            - name: VITE_BACKEND_BASE_URL
-              value: {{ .Values.domain.url }}
+            - name: CONDUCTOR_URL
+              value: http://{{ .Values.domain.url }}
       restartPolicy: Always

@@ -6,3 +6,7 @@ rules:
   - apiGroups: ["debezium.io"]
     resources: ["debeziumservers"]
     verbs: ["patch", "create", "delete"]
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ {{ include "debezium-platform.offsetConfigMapName" . | quote}} ]
+    verbs: [ "create", "update", "patch", "get" ]

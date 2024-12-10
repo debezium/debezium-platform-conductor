@@ -10,6 +10,17 @@ Get the database secret name.
 {{- end -}}
 
 {{/*
+Get the offset config map name.
+*/}}
+{{- define "debezium-platform.offsetConfigMapName" -}}
+{{- if empty .Values.conductor.offset.existingConfigMap -}}
+    {{- printf "%s-%s" .Chart.Name "offsets" -}}
+{{- else -}}
+    {{- .Values.conductor.offset.existingConfigMap -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 

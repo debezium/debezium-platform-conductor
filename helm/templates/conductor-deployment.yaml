@@ -34,6 +34,14 @@ spec:
                 secretKeyRef:
                   name: {{ include "debezium-platform.secretName" . }}
                   key: username
+            - name: CONDUCTOR_WATCHER_OFFSET_STORAGE_TYPE
+              value: io.debezium.storage.configmap.ConfigMapOffsetStore
+            - name: CONDUCTOR_WATCHER_OFFSET_STORAGE_CONFIG_CONFIGMAP_NAME
+              value: {{ include "debezium-platform.offsetConfigMapName" . }}
+            - name: QUARKUS_HTTP_CORS_ORIGINS
+              value: http://{{ .Values.domain.url }}
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.name }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ tpl $value $ | quote}}
