@@ -70,3 +70,52 @@ The `create-cluster.sh` performs several steps:
 The behaviour of `create-cluster.sh` can be modified by changing the values in the `env.sh` file.
 
 
+### Running the `helm` Example
+
+You need create an A record to map your domain to the K8s IP.
+
+For this example, considering a local setup, we will use the `/etc/hosts` to resolve the domain.
+
+The following script will map the K8s IP to the specified domain into the `/etc/hosts`.
+
+```shell
+export DEBEZIUM_PLATFORM_DOMAIN=platform.debezium.io
+./examples/helm/update_hosts.sh
+```
+
+Create a dedicated namespace
+
+```shell
+kubectl create ns debezium-platform
+```
+
+and then install *debezium-platform* through `helm`
+
+```shell
+cd helm && 
+helm dependency build &&
+helm install debezium-platform . -f ../example.yaml
+```
+
+after all pods are running you should access the platform UI from `http://platform.debezium.io/`
+
+To finish the example we will create a PostgreSQL, that will be used as source database, 
+and a kafka cluster, used as destination in our example pipeline.
+
+```shell
+# Deploy the source database
+
+kubectl create -f ../examples/compose-kind-kafka/k8s/database/001_postgresql.yml
+```
+
+```shell
+# Deploy the kafka cluster
+
+kubectl create -f ../examples/compose-kind-kafka/k8s/kafka/001_kafka.yml
+```
+
+```shell
+# Create a test pipeline
+
+../examples/compose-kind-kafka/seed.sh platform.debezium.io 80 helm/payloads/
+```

@@ -29,6 +29,13 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>io.debezium</groupId>
+        <artifactId>debezium-bom</artifactId>
+        <version>${version.debezium}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-bom</artifactId>
         <version>${quarkus.platform.version}</version>
@@ -46,13 +53,6 @@
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-debezium-bom</artifactId>
         <version>${quarkus.platform.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.debezium</groupId>
-        <artifactId>debezium-bom</artifactId>
-        <version>${version.debezium}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -93,14 +93,6 @@
       <artifactId>debezium-storage-file</artifactId>
     </dependency>
 
-    <!-- TODO investigate -->
-    <!-- Forcing since 3.7.1 arrives even if the connect-api is 3.9.0 -->
-    <dependency>
-      <groupId>org.apache.kafka</groupId>
-      <artifactId>kafka-clients</artifactId>
-      <version>3.9.0</version>
-      <scope>compile</scope>
-    </dependency>
 
     <dependency>
       <groupId>io.debezium</groupId>
