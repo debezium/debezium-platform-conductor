@@ -1,3 +1,6 @@
+This repository has been archived infavour of [debezium-platform](https://github.com/debezium/debezium-platform)
+
+
 # debezium-platform-conductor
 
 The back-end component of Debezium management platform. Conductor provides a set APIs which can be 
